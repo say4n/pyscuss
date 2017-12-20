@@ -2,7 +2,7 @@ from flask import Flask, render_template
 from flask_socketio import SocketIO, send, emit
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = 'secret!'
+app.config['SECRET_KEY'] = 'z0hnjGHAPfNXegURQXKwl8GASKmsyMVzVCUACXtFd6r2y3vDw0'
 socketio = SocketIO(app)
 users = 0
 
