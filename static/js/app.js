@@ -30,7 +30,12 @@ socket.on('user joined', function(message) {
     log(message + " has joined the conversation");
 });
 
-// new user joined
+// user left
+socket.on('user left', function(message) {
+    log(message + " has left the conversation");
+});
+
+// status
 socket.on('status', function(users) {
     if (parseInt(users) > 1) {
         $(".counter").text(users + " users online");

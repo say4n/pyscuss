@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 from flask_socketio import SocketIO, send, emit
 
 # main
@@ -8,6 +8,7 @@ socketio = SocketIO(app)
 
 # users
 users = 0
+db = {}
 
 @app.route("/")
 def hello():
@@ -19,6 +20,7 @@ def handle_message(message):
 
 @socketio.on('new user', namespace='/v1')
 def new_user_event(user):
+    db[request.sid] = user
     print(f"{user} joined the room")
     emit('user joined', user, broadcast=True)
 
@@ -43,7 +45,8 @@ def dropped_connection():
     global users
 
     users -= 1
-    print(f"{users} users connected. 1 user left")
+    print(f"{users} users connected. {db[request.sid]} left")
+    emit('user left', db.pop(request.sid), broadcast=True)
     emit('status', users, broadcast=True)
 
 if __name__ == '__main__':
