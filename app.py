@@ -45,9 +45,12 @@ def dropped_connection():
     global users
 
     users -= 1
-    print(f"{users} users connected. {db[request.sid]} left")
-    emit('user left', db.pop(request.sid), broadcast=True)
-    emit('status', users, broadcast=True)
+    try:
+        print(f"{users} users connected. {db[request.sid]} left")
+        emit('user left', db.pop(request.sid), broadcast=True)
+        emit('status', users, broadcast=True)
+    except KeyError:
+        pass
 
 if __name__ == '__main__':
     socketio.run(app)
