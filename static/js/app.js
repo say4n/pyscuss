@@ -16,11 +16,9 @@ var COLORS = [
 ];
 
 // socket
-console.log("protocol", location.protocol);
-console.log("domain", document.domain);
-console.log("port", location.port);
-
-var socket = io.connect(location.protocol + "//" + document.domain + ':' + location.port + "/v1");
+var full = location.protocol+'//'+location.hostname+(location.port ? ':'+location.port: '');
+// console.log(full);
+var socket = io.connect(full + "/v1");
 
 // new connection
 socket.on('connect', function() {
