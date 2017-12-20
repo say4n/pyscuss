@@ -57,6 +57,16 @@ socket.on('new message', function(data) {
     $('html, body').animate({scrollTop: $(document).height()-$(window).height()});
 });
 
+// Whenever the server emits 'typing', show the typing message
+socket.on('typing', function (data) {
+    addChatTyping(data);
+});
+
+// Whenever the server emits 'stop typing', kill the typing message
+socket.on('stop typing', function (data) {
+    removeChatTyping(data);
+});
+
 $(function() {
     // entry
     $("#form").fadeIn("fast");
@@ -67,6 +77,31 @@ $(function() {
         handleNewUser();
     });
 });
+
+// Adds the visual chat typing message
+function addChatTyping (data) {
+    message = ' is typing';
+    var $typingMessage = $('<li class="typing message"/>')
+                        .text(data.username + message)
+                        .data('username', data.username);
+    $typingMessage.hide().fadeIn(FADE_TIME);
+    $messages.append($typingMessage);
+    $('html, body').animate({scrollTop: $(document).height()-$(window).height()});
+}
+
+// Removes the visual chat typing message
+function removeChatTyping (data) {
+    getTypingMessages(data).fadeOut(function () {
+        $(this).remove();
+    });
+}
+
+// Gets the 'X is typing' messages of a user
+function getTypingMessages (data) {
+    return $('.typing.message').filter(function (i) {
+        return $(this).data('username') === data.username;
+    });
+}
 
 // Log events 
 function log(message) {
@@ -119,7 +154,7 @@ function updateTyping() {
     if (connected) {
         if (!typing) {
             typing = true;
-            socket.emit('typing');
+            socket.emit('typing', {username: user});
         }
         lastTypingTime = (new Date()).getTime();
 
@@ -127,7 +162,7 @@ function updateTyping() {
             var typingTimer = (new Date()).getTime();
             var timeDiff = typingTimer - lastTypingTime;
             if (timeDiff >= TYPING_TIMER_LENGTH && typing) {
-                socket.emit('stop typing');
+                socket.emit('stop typing', {username: user});
                 typing = false;
             }
         }, TYPING_TIMER_LENGTH);
@@ -161,7 +196,7 @@ $window.keydown(function(event) {
     if (event.which === 13) {
         if (user && user.length) {
             sendMessage();
-            socket.emit('stop typing');
+            socket.emit('stop typing', {username: user});
             typing = false;
         }
         else {
