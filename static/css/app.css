@@ -17,6 +17,10 @@ ul {
     font-weight: 500;
 }
 
+audio {
+    display: none;
+}
+
 /* Messages */
 
 .chatArea {

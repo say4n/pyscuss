@@ -58,6 +58,9 @@ socket.on('new message', function(data) {
                             .append($usernameDiv, $messageBodyDiv);
     
     $messageDiv.hide().fadeIn(FADE_TIME);
+    if (user != data.username) {
+        $('#alert')[0].play();
+    }
     $messages.append($messageDiv);
     $('html, body').animate({scrollTop: $(document).height()-$(window).height()});
 });
