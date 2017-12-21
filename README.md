@@ -2,6 +2,8 @@
 
 `[Py]scuss` is a bare-bones real time non-persistent chat app built using websockets, python & :heart:, built to explore websockets. Witness it in action [here](https://pyscuss.herokuapp.com/). 
 
+[![[Py]scuss Demo](https://img.youtube.com/vi/YGT4CEiCZMM/0.jpg)]https://youtu.be/YGT4CEiCZMM)
+
 ## Installation
 
 `[Py]scuss` uses [`pipenv`](https://github.com/pypa/pipenv) for dependency management.
