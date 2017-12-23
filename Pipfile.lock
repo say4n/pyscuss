@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "e3d885f15c959aca2f4187d598aad65c39308813bc4f84fe6da6c0498128590e"
+            "sha256": "22b01b429edb75ca80c6d3194c0a13669275ef4847a4e908ec9f0fc14bf70ea4"
         },
         "host-environment-markers": {
             "implementation_name": "cpython",
@@ -62,6 +62,12 @@
                 "sha256:df23f790db8529c543bd0b54165215c342cf6955a4a1f605650e759197a46d59"
             ],
             "version": "==2.9.3"
+        },
+        "flask-sslify": {
+            "hashes": [
+                "sha256:d33e1d3c09cd95154176aa8a7319418e52129fc482dd56d8a8ad7c24500d543e"
+            ],
+            "version": "==0.1.5"
         },
         "greenlet": {
             "hashes": [

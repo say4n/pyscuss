@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request
 from flask_socketio import SocketIO, send, emit
+from flask_sslify import SSLify
 import os
 
 # main
@@ -11,10 +12,9 @@ socketio = SocketIO(app)
 users = 0
 db = {}
 
-@app.before_request
-def beforeRequest():
-    if not request.url.startswith('https') and 'DYNO' in os.environ:
-        return redirect(request.url.replace('http', 'https', 1))
+if 'DYNO' in os.environ: 
+    # only trigger SSLify if the app is running on Heroku
+    sslify = SSLify(app, permanent=True)
 
 @app.route("/")
 def hello():

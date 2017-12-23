@@ -15,6 +15,7 @@ flask = "*"
 flask-socketio = "*"
 gunicorn = "*"
 eventlet = "*"
+flask-sslify = "*"
 
 
 [requires]
