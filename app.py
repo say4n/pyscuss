@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request
 from flask_socketio import SocketIO, send, emit
+import os
 
 # main
 app = Flask(__name__)
@@ -9,6 +10,11 @@ socketio = SocketIO(app)
 # users
 users = 0
 db = {}
+
+@app.before_request
+def beforeRequest():
+    if not request.url.startswith('https') and 'DYNO' in os.environ:
+        return redirect(request.url.replace('http', 'https', 1))
 
 @app.route("/")
 def hello():
